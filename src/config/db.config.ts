@@ -3,9 +3,9 @@ import * as config from 'config';
 import * as fs from 'fs';
 const dbConfig = config.get('db');
 
-global.console.log(dbConfig);
 export const DbConfig: TypeOrmModuleOptions = {
-  type: dbConfig.type,
+  type: 'postgres',
+  url: process.env.DATABASE_URL,
   host: dbConfig.host,
   port: dbConfig.port,
   username: dbConfig.username,
@@ -15,10 +15,10 @@ export const DbConfig: TypeOrmModuleOptions = {
   migrations: [__dirname + '/../**/migrations/*{.ts,.js}'],
   synchronize: false,
   migrationsRun: true,
-  ssl: {
-    ca: fs.readFileSync(__dirname + '/rds-ca-2019-root.pem')
-  },
-  logging: ["query", "error"],
+  // ssl: {
+  //   ca: fs.readFileSync(__dirname + '/rds-ca-2019-root.pem')
+  // },
+  // logging: ["query", "error"],
   cli: {
     migrationsDir: 'migrations',
   },
