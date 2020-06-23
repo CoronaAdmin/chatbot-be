@@ -1,11 +1,13 @@
-import { Controller,Get,Post,Body } from '@nestjs/common';
+import { Controller,Get,Post,Body, UsePipes } from '@nestjs/common';
 import { CreateSurveyDto } from './dto/create-survey.dto';
 import { SurveyService } from './survey.service';
+import { ValidationPipe } from '../common/validation.pipe';
+
 
 @Controller('survey')
 export class SurveyController {
 
-    constructor(private surveyService: SurveyService) {}
+    constructor(private readonly surveyService: SurveyService) {}
 
     @Get()
     welcome(): string {
@@ -13,6 +15,7 @@ export class SurveyController {
     }
 
     @Post()
+    @UsePipes(new ValidationPipe())
     async create(@Body() createSurveyDto: CreateSurveyDto): Promise<any>{
         return this.surveyService.create(createSurveyDto)
     }
