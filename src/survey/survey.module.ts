@@ -11,6 +11,6 @@ import { SurveyRepository } from './survey.repository';
     ],
     controllers: [SurveyController],
     providers: [SurveyService,SurveyRepository],
-    exports:[SurveyService]
+    exports:[SurveyService,SurveyRepository]
 })
 export class SurveyModule {}

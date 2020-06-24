@@ -9,17 +9,22 @@ import { DbConfig } from './config/db.config';
 import { SurveyService } from './survey/survey.service';
 import { SurveyModule } from './survey/survey.module';
 import { SurveyRepository } from './survey/survey.repository';
+import { QuestionsController } from './questions/questions.controller';
+import { QuestionsService } from './questions/questions.service';
+import { QuestionsModule } from './questions/questions.module';
 
 @Module({
   
   imports: [TypeOrmModule.forRoot(DbConfig),
     AccountModule,
-    SurveyModule],
+    SurveyModule,
+    QuestionsModule],
   controllers: [
     AccountController,
     SurveyController,
+    QuestionsController,
   ],
-  providers: [SurveyService,SurveyRepository],
+  providers: [],
   
 })
 export class AppModule {}
