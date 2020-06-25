@@ -9,12 +9,16 @@ export class SurveyRepository extends Repository<Survey> {
   createSurvey = async (createSurveyDto:CreateSurveyDto) => {
       const {name} = createSurveyDto
       const survey = new Survey()
+      let result
     try{
         survey.name = name
         await survey.save()
+        .then(res=>{
+          result=res
+        })
         return {
             status:201,
-            name:name,
+            result:result,
             message:"successfully created survey"
         }
     }

@@ -8,7 +8,6 @@ export class QuestionsRepository extends Repository<Questions> {
     createQuestions = async (createQuestionsDto:CreateQuestionsDto,id:number,surveyRepository:SurveyRepository) => {
         const {ques} = createQuestionsDto
         const question = new Questions()
-        // const surveyRepository = await getRepository(SurveyRepository)
         let result 
         const survey = await surveyRepository.findOne(id)
         if(!survey){
