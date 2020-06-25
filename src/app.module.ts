@@ -12,17 +12,22 @@ import { SurveyRepository } from './survey/survey.repository';
 import { QuestionsController } from './questions/questions.controller';
 import { QuestionsService } from './questions/questions.service';
 import { QuestionsModule } from './questions/questions.module';
+import { AnswersController } from './answers/answers.controller';
+import { AnswersService } from './answers/answers.service';
+import { AnswersModule } from './answers/answers.module';
 
 @Module({
   
   imports: [TypeOrmModule.forRoot(DbConfig),
     AccountModule,
     SurveyModule,
-    QuestionsModule],
+    QuestionsModule,
+    AnswersModule],
   controllers: [
     AccountController,
     SurveyController,
     QuestionsController,
+    AnswersController,
   ],
   providers: [],
   
