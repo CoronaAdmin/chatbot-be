@@ -2,8 +2,9 @@ import { Controller,Get,Post,Body, UsePipes } from '@nestjs/common';
 import { CreateSurveyDto } from './dto/create-survey.dto';
 import { SurveyService } from './survey.service';
 import { ValidationPipe } from '../common/validation.pipe';
+import { ApiUseTags } from '@nestjs/swagger';
 
-
+@ApiUseTags("Survey Management")
 @Controller('survey')
 export class SurveyController {
 
@@ -14,6 +15,13 @@ export class SurveyController {
         return 'Welcome to COVID-19 surveys';
     }
 
+    //get all surveys list
+    @Get('/all')
+    getAllSurveys():Promise<any>{
+        return this.surveyService.getAllSurveys();
+    }
+
+    //create a survey
     @Post()
     @UsePipes(new ValidationPipe())
     async create(@Body() createSurveyDto: CreateSurveyDto): Promise<any>{

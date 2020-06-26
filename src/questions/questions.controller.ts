@@ -2,7 +2,9 @@ import { Controller, Get, Post, UsePipes, Body, Param, ParseIntPipe } from '@nes
 import { QuestionsService } from './questions.service';
 import { ValidationPipe } from 'src/common/validation.pipe';
 import { CreateQuestionsDto } from './dto/questions.dto';
+import { ApiUseTags } from '@nestjs/swagger';
 
+@ApiUseTags("Questions Management")
 @Controller('questions')
 export class QuestionsController {
     constructor(private readonly questionsService: QuestionsService) {}
@@ -10,6 +12,11 @@ export class QuestionsController {
     @Get()
     welcome(): string {
         return 'Welcome to COVID-19 questions';
+    }
+
+    @Get('/all')
+    getAllQuestions():Promise<any>{
+        return this.questionsService.getAllQuestions();
     }
 
     @Post("/:surveyId")

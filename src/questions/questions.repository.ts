@@ -5,6 +5,24 @@ import { CreateQuestionsDto } from './dto/questions.dto';
 
 @EntityRepository(Questions)
 export class QuestionsRepository extends Repository<Questions> {
+
+    getQuestions = async() =>{
+        try{
+            const questions = await getRepository(Questions)
+            .createQueryBuilder("questions")
+            .getMany()
+            if(questions){
+              return {
+                message:"Questions list fetched successfully",
+                questions
+              }
+            }
+          }
+          catch(err){
+            return "Cannot fetch questions list"
+            console.log(err)
+          }
+    }
     createQuestions = async (createQuestionsDto:CreateQuestionsDto,id:number,surveyRepository:SurveyRepository) => {
         const {ques} = createQuestionsDto
         const question = new Questions()

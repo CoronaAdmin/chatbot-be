@@ -14,5 +14,8 @@ export class QuestionsService {
     async createQuestions(data:CreateQuestionsDto,id:number) {
         return this.questionsRepository.createQuestions(data,id,this.surveyRepository)
       }
+    async getAllQuestions():Promise<any>{
+      return this.questionsRepository.getQuestions()
+    }
 }
 
