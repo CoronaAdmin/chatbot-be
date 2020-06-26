@@ -11,7 +11,12 @@ export class SurveyService {
         @InjectRepository(SurveyRepository)
         private readonly surveyRepository: SurveyRepository,
       ) {}
+
     async create(data:CreateSurveyDto) {
         return this.surveyRepository.createSurvey(data)
       }
+
+    async getAllSurveys():Promise<any>{
+      return this.surveyRepository.getSurveys()
+    }
 }

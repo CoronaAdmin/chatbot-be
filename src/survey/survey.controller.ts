@@ -14,6 +14,13 @@ export class SurveyController {
         return 'Welcome to COVID-19 surveys';
     }
 
+    //get all surveys list
+    @Get('/all')
+    getAllSurveys():Promise<any>{
+        return this.surveyService.getAllSurveys();
+    }
+
+    //create a survey
     @Post()
     @UsePipes(new ValidationPipe())
     async create(@Body() createSurveyDto: CreateSurveyDto): Promise<any>{
