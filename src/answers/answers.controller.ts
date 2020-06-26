@@ -14,6 +14,12 @@ export class AnswersController {
         return 'Welcome to COVID-19 user responses';
     }
 
+    //get the response of the particular user
+    @Get('/:userid')
+    getUserResponseById(@Param('userid',ParseIntPipe) userid:number):Promise<any>{
+        return this.answersService.getUserResponse(userid);
+    }
+
     @Post("/:userId")
     async create(
         @Param('userId',ParseIntPipe) userId:number,

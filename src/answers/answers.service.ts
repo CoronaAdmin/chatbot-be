@@ -11,9 +11,13 @@ export class AnswersService {
         private readonly answersRepository:AnswersRepository,
         private readonly accountRepository:AccountRepository
       ) {}
+
     async submitUserResponse(data:CreateAnswersDto,userid:number) {
         return this.answersRepository.submitResponse(data,userid,this.accountRepository)
       }
+    async getUserResponse(userid:number){
+      return this.answersRepository.getUserResponse(userid,this.accountRepository)
+    }
 }
 
 
