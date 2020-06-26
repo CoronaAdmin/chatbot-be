@@ -13,15 +13,10 @@ export class AnswersService {
       ) {}
 
     async submitUserResponse(user:any,data:CreateAnswersDto,userid:number) {
-      if(user.type==='ashaworker')
-      {
-        return this.answersRepository.submitResponse(user,data,userid,this.accountRepository)
-      }
+        return this.answersRepository.submitResponse(data,userid,this.accountRepository)
     }
     async getUserResponse(user:any,userid:number){
-      if(user.type === 'ashaworker'){
-      return this.answersRepository.getUserResponse(user,userid,this.accountRepository)
-      }
+      return this.answersRepository.getUserResponse(userid,this.accountRepository)
     }
 }
 
