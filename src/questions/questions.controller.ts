@@ -5,21 +5,21 @@ import { CreateQuestionsDto } from './dto/questions.dto';
 import { ApiUseTags } from '@nestjs/swagger';
 
 @ApiUseTags("Questions Management")
-@Controller('questions')
+@Controller('/api/v1/questions')
 export class QuestionsController {
     constructor(private readonly questionsService: QuestionsService) {}
 
-    @Get()
+    @Get('/welcome')
     welcome(): string {
         return 'Welcome to COVID-19 questions';
     }
 
-    @Get('/all')
+    @Get('fetch_questions/all')
     getAllQuestions():Promise<any>{
         return this.questionsService.getAllQuestions();
     }
 
-    @Post("/:surveyId")
+    @Post("submit_question/:surveyId")
     @UsePipes(new ValidationPipe())
     async create(
         @Param('surveyId',ParseIntPipe) surveyId:number,

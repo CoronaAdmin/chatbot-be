@@ -1,5 +1,5 @@
 import { ApiModelProperty } from "@nestjs/swagger";
-import { IsString, IsObject} from 'class-validator';
+import { IsObject} from 'class-validator';
 
 export class CreateAnswersDto {
     @ApiModelProperty({example:{

@@ -11,19 +11,14 @@ import { async } from 'rxjs/internal/scheduler/async';
 @EntityRepository(Answers)
 export class AnswersRepository extends Repository<Answers> {
 
-    getUserResponse = async(user1:any,userid:number,accountRepository:AccountRepository) => {
+    getUserResponse = async(userid:number,accountRepository:AccountRepository) => {
         let savedUserResponse
-        const user = await accountRepository.findOne(user1.ashaWokerId)
-        if(!user){
-            return {
-                status:404,
-                error:"User Not Found"
-            }
-        }
+    
         try{
+            
             const savedResponse = await getRepository(Answers)
             .createQueryBuilder("answer")
-            .where("answer.user.id = :id", { id: userid })
+            .where("answer.user_id = :id", { id: userid})
             .getOne();
 
             if(savedResponse){
@@ -34,7 +29,7 @@ export class AnswersRepository extends Repository<Answers> {
             }
             else{
                 return {
-                    error:"Couldn't fetch the user response"
+                    error:"Couldn't fetch the user and his rresponse"
                 }
             }
         }
@@ -47,29 +42,23 @@ export class AnswersRepository extends Repository<Answers> {
         }
     }
 
-    submitResponse = async (user1:any,createAnswersDto:CreateAnswersDto,userid:number,accountRepository:AccountRepository) => {
+    submitResponse = async (createAnswersDto:CreateAnswersDto,userid:number,accountRepository:AccountRepository) => {
         const {response} = createAnswersDto
         const answer = new Answers()
         let result 
         let savedUserResponse
-        const user = await accountRepository.findOne(user1.ashaWorkerId)
-        if(!user){
-            return {
-                status:404,
-                error:"User Not Found"
-            }
-        }
+    
         const savedResponse = await getRepository(Answers)
         .createQueryBuilder("answer")
-        .where("answer.user.id = :id", { id: userid })
+        .where("answer.user_id = :id", { id: userid })
         .getOne();
         if(savedResponse)
         {
             savedUserResponse = savedResponse.response
             let finalResponse = Object.assign(savedUserResponse,response)
             try{
-                savedResponse.response=finalResponse  
-                savedResponse.user = user
+                savedResponse.response=finalResponse 
+                savedResponse.user_id = userid 
                 await savedResponse.save()
                 .then(res=>{
                     result = res
@@ -89,7 +78,7 @@ export class AnswersRepository extends Repository<Answers> {
         else{
             try{
                 answer.response = response
-                answer.user = user
+                answer.user_id = userid
                 await answer.save()
                 .then(res=>{
                     result = res
