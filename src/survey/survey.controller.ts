@@ -2,8 +2,9 @@ import { Controller,Get,Post,Body, UsePipes } from '@nestjs/common';
 import { CreateSurveyDto } from './dto/create-survey.dto';
 import { SurveyService } from './survey.service';
 import { ValidationPipe } from '../common/validation.pipe';
+import { ApiUseTags } from '@nestjs/swagger';
 
-
+@ApiUseTags("Survey Management")
 @Controller('survey')
 export class SurveyController {
 

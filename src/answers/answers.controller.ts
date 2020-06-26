@@ -1,7 +1,9 @@
 import { Controller, Get, Post, UsePipes, Param, ParseIntPipe, Body } from '@nestjs/common';
 import { AnswersService } from './answers.service';
 import { CreateAnswersDto } from './dto/answers.dto';
+import { ApiUseTags } from '@nestjs/swagger';
 
+@ApiUseTags("Answers Management")
 @Controller('answers')
 export class AnswersController {
 
