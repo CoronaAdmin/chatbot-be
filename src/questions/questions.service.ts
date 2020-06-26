@@ -17,5 +17,8 @@ export class QuestionsService {
     async getAllQuestions():Promise<any>{
       return this.questionsRepository.getQuestions()
     }
+    async getSurveyQuestions(surveyId:number):Promise<any>{
+      return this.questionsRepository.getSurveyQuestions(surveyId,this.surveyRepository)
+    }
 }
 

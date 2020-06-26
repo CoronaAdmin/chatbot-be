@@ -2,6 +2,8 @@ import { EntityRepository, Repository, getRepository } from 'typeorm';
 import { SurveyRepository } from "./../survey/survey.repository";
 import { Questions } from "./entity/questions.entity";
 import { CreateQuestionsDto } from './dto/questions.dto';
+import { syncBuiltinESMExports } from 'module';
+import { async } from 'rxjs/internal/scheduler/async';
 
 @EntityRepository(Questions)
 export class QuestionsRepository extends Repository<Questions> {
@@ -23,6 +25,43 @@ export class QuestionsRepository extends Repository<Questions> {
             console.log(err)
           }
     }
+
+    getSurveyQuestions = async(surveyId:number,surveyRepository:SurveyRepository) => {
+      try{
+        const [survey,count]= await surveyRepository.findAndCount({id:surveyId})
+        if(count<=0){
+          return {
+            Error:"Such a survey does not exists!!"
+          }
+        }
+        const questions = await getRepository(Questions)
+        .createQueryBuilder("question")
+        .where("question.survey_id = :id", { id: surveyId })
+        .getMany()
+
+        if(questions){
+          return{
+            message:"Questions for survey id "+surveyId+" are fetched successfully!!",
+            questions
+          }
+        }
+        else{
+          return{
+            statusCode:400,
+            result:"Couldn't fetch survey questions!!"
+          }
+        }
+        
+      }catch(err){
+        console.log(err)
+        return {
+          statusCode:400,
+          result:"Error fetching survey questions!!"
+        }
+      }
+    }
+
+    
     createQuestions = async (createQuestionsDto:CreateQuestionsDto,id:number,surveyRepository:SurveyRepository) => {
         const {ques} = createQuestionsDto
         const question = new Questions()

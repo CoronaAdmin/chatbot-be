@@ -19,6 +19,13 @@ export class QuestionsController {
         return this.questionsService.getAllQuestions();
     }
 
+    @Get('/fetch_questions/:surveyId')
+    getSurveyQuestions(
+        @Param('surveyId',ParseIntPipe) surveyId:number,
+    ):Promise<any>{
+        return this.questionsService.getSurveyQuestions(surveyId);
+    }
+
     @Post("submit_question/:surveyId")
     @UsePipes(new ValidationPipe())
     async create(
