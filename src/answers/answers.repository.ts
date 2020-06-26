@@ -11,9 +11,9 @@ import { async } from 'rxjs/internal/scheduler/async';
 @EntityRepository(Answers)
 export class AnswersRepository extends Repository<Answers> {
 
-    getUserResponse = async(userid:number,accountRepository:AccountRepository) => {
+    getUserResponse = async(user1:any,userid:number,accountRepository:AccountRepository) => {
         let savedUserResponse
-        const user = await accountRepository.findOne(userid)
+        const user = await accountRepository.findOne(user1.ashaWokerId)
         if(!user){
             return {
                 status:404,
@@ -47,12 +47,12 @@ export class AnswersRepository extends Repository<Answers> {
         }
     }
 
-    submitResponse = async (createAnswersDto:CreateAnswersDto,userid:number,accountRepository:AccountRepository) => {
+    submitResponse = async (user1:any,createAnswersDto:CreateAnswersDto,userid:number,accountRepository:AccountRepository) => {
         const {response} = createAnswersDto
         const answer = new Answers()
         let result 
         let savedUserResponse
-        const user = await accountRepository.findOne(userid)
+        const user = await accountRepository.findOne(user1.ashaWorkerId)
         if(!user){
             return {
                 status:404,

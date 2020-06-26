@@ -12,11 +12,16 @@ export class AnswersService {
         private readonly accountRepository:AccountRepository
       ) {}
 
-    async submitUserResponse(data:CreateAnswersDto,userid:number) {
-        return this.answersRepository.submitResponse(data,userid,this.accountRepository)
+    async submitUserResponse(user:any,data:CreateAnswersDto,userid:number) {
+      if(user.type==='ashaworker')
+      {
+        return this.answersRepository.submitResponse(user,data,userid,this.accountRepository)
       }
-    async getUserResponse(userid:number){
-      return this.answersRepository.getUserResponse(userid,this.accountRepository)
+    }
+    async getUserResponse(user:any,userid:number){
+      if(user.type === 'ashaworker'){
+      return this.answersRepository.getUserResponse(user,userid,this.accountRepository)
+      }
     }
 }
 
