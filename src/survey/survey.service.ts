@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateSurveyDto } from './dto/create-survey.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Survey } from './entity/survey.entity';
@@ -12,15 +12,24 @@ export class SurveyService {
         private readonly surveyRepository: SurveyRepository,
       ) {}
 
-    async create(data:CreateSurveyDto) {
+    async create(user:any,data:CreateSurveyDto) {
+      if(user.type!=='ashaworker'){
+        throw new UnauthorizedException({detail:'User Not Authorized'})
+      }
         return this.surveyRepository.createSurvey(data)
       }
 
-    async getAllSurveys():Promise<any>{
+    async getAllSurveys(user:any):Promise<any>{
+      if(user.type!=='ashaworker'){
+        throw new UnauthorizedException({detail:'User Not Authorized'})
+      }
       return this.surveyRepository.getSurveys()
     }
 
-    async deleteSurvey(survey_id:number):Promise<any>{
+    async deleteSurvey(user:any,survey_id:number):Promise<any>{
+      if(user.type!=='ashaworker'){
+        throw new UnauthorizedException({detail:'User Not Authorized'})
+      }
       return this.surveyRepository.deleteSurvey(survey_id)
     }
 }
