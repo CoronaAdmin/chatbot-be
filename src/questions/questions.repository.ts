@@ -1,4 +1,4 @@
-import { EntityRepository, Repository, getRepository } from 'typeorm';
+import { EntityRepository, Repository, getRepository, getConnection } from 'typeorm';
 import { SurveyRepository } from "./../survey/survey.repository";
 import { Questions } from "./entity/questions.entity";
 import { CreateQuestionsDto } from './dto/questions.dto';
@@ -61,7 +61,42 @@ export class QuestionsRepository extends Repository<Questions> {
       }
     }
 
-    
+    deleteQuestion = async (ques_id:number) => {
+
+      let result
+      try{
+        const question = await getRepository(Questions)
+        .createQueryBuilder("question")
+        .where("id = :id", { id: ques_id }).getOne()
+        if(!question){
+          return{
+            message:"Such a question doesn't exxists!!"
+          }
+        }
+        await getConnection()
+          .createQueryBuilder()
+          .delete()
+          .from(Questions)
+          .where("id = :id", { id: ques_id })
+          .execute()
+          .then(res=>{
+            result = res
+          })
+          
+        if(result){
+          return {
+            statusCode:201,
+            message:"Question Successfully Deleted!!"
+          }
+        }
+          
+      }catch(err){
+        console.log(err)
+        return {
+          error:"Couldn't perform delete question operation!!"
+        }
+      }
+    }
     createQuestions = async (createQuestionsDto:CreateQuestionsDto,id:number,surveyRepository:SurveyRepository) => {
         const {ques} = createQuestionsDto
         const question = new Questions()
