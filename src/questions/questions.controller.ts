@@ -1,4 +1,4 @@
-import { Controller, Get, Post, UsePipes, Body, Param, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, UsePipes, Body, Param, ParseIntPipe, Delete } from '@nestjs/common';
 import { QuestionsService } from './questions.service';
 import { ValidationPipe } from 'src/common/validation.pipe';
 import { CreateQuestionsDto } from './dto/questions.dto';
@@ -32,5 +32,12 @@ export class QuestionsController {
         @Param('surveyId',ParseIntPipe) surveyId:number,
         @Body() createQuestionsDto: CreateQuestionsDto): Promise<any>{
         return this.questionsService.createQuestions(createQuestionsDto,surveyId)
+    }
+
+    @Delete("delete_question/:ques_id")
+    async deleteQuestion(
+        @Param('ques_id',ParseIntPipe) ques_id:number,
+    ):Promise<any>{
+        return this.questionsService.deleteQuestion(ques_id)
     }
 }

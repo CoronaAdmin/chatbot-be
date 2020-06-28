@@ -19,4 +19,8 @@ export class SurveyService {
     async getAllSurveys():Promise<any>{
       return this.surveyRepository.getSurveys()
     }
+
+    async deleteSurvey(survey_id:number):Promise<any>{
+      return this.surveyRepository.deleteSurvey(survey_id)
+    }
 }

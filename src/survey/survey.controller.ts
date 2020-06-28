@@ -1,4 +1,4 @@
-import { Controller,Get,Post,Body, UsePipes } from '@nestjs/common';
+import { Controller,Get,Post,Body, UsePipes, Delete, Param, ParseIntPipe } from '@nestjs/common';
 import { CreateSurveyDto } from './dto/create-survey.dto';
 import { SurveyService } from './survey.service';
 import { ValidationPipe } from '../common/validation.pipe';
@@ -26,5 +26,12 @@ export class SurveyController {
     @UsePipes(new ValidationPipe())
     async create(@Body() createSurveyDto: CreateSurveyDto): Promise<any>{
         return this.surveyService.create(createSurveyDto)
+    }
+
+    @Delete("delete_survey/:survey_id")
+    async deleteSurvey(
+        @Param('survey_id',ParseIntPipe) survey_id:number,
+    ):Promise<any>{
+        return this.surveyService.deleteSurvey(survey_id)
     }
 }

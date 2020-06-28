@@ -7,6 +7,7 @@ import { join } from 'path';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
+
   const logger = new Logger('Muthoot Root');
   const serverConfig = config.get('server');
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
