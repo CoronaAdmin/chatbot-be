@@ -9,10 +9,11 @@ const sessionId = uuid.v4();
 export class ChatbotService {
     async runSample(message:string,projectId = 'nest-chat-bot-hxwsgv') {
     
+    try{
       const key = process.env.private_key.toString()
       const sessionClient = new dialogflow.SessionsClient({
         credentials:{
-            "private_key": process.env.private_key.toString(),
+            "private_key": process.env.private_key,
             "client_email": process.env.client_email,
         } 
       });
@@ -41,5 +42,8 @@ export class ChatbotService {
       return {
           response:result.fulfillmentText
       }
+    }catch(err){
+        return err
+    }
     }
 }
