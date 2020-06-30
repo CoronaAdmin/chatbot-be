@@ -8,6 +8,7 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import * as config from 'config';
 import { DefaultAdminModule, DefaultAdminSite } from 'nestjs-admin';
+import { accountAshaWorker } from './account.ashaworker';
 const jwtConfig = config.get('jwt');
 @Module({
   imports:[
@@ -25,6 +26,6 @@ const jwtConfig = config.get('jwt');
 })
 export class AccountModule {
   constructor(private readonly adminSite: DefaultAdminSite) {
-    adminSite.register('Account', Account)
+    adminSite.register('AshaWorker', accountAshaWorker)
   }
 }
