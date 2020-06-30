@@ -5,8 +5,8 @@ export class QuestionsAdmin extends AdminEntity {
     entity = Questions
     listDisplay = [
         'id',
-        'question',
+        'ques',
 
     ]
-    searchFields = ['id','question']
+    searchFields = ['id','ques']
 }

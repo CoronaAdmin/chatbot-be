@@ -5,7 +5,6 @@ export class AnswersAdmin extends AdminEntity {
     entity = Answers
     listDisplay = [
         'id',
-        'response',
         'user_id'
     ]
     searchFields = ['id','user_id']
