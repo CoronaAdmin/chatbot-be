@@ -6,6 +6,7 @@ import { QuestionsService } from './questions.service';
 import { QuestionsRepository } from './questions.repository';
 import { SurveyRepository } from 'src/survey/survey.repository';
 import { DefaultAdminSite, DefaultAdminModule } from 'nestjs-admin';
+import { QuestionsAdmin } from './questions.admin';
 
 @Module({
     imports:[
@@ -18,6 +19,6 @@ import { DefaultAdminSite, DefaultAdminModule } from 'nestjs-admin';
 })
 export class QuestionsModule {
     constructor(private readonly adminSite: DefaultAdminSite) {
-        adminSite.register('Questions', Questions)
+        adminSite.register('Questions', QuestionsAdmin)
       }
 }

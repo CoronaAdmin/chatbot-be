@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Survey } from './entity/survey.entity';
 import { SurveyRepository } from './survey.repository';
 import { DefaultAdminModule, DefaultAdminSite } from 'nestjs-admin';
+import { SurveyAdmin } from './survey.admin';
 
 @Module({
     imports:[
@@ -18,6 +19,6 @@ import { DefaultAdminModule, DefaultAdminSite } from 'nestjs-admin';
 export class SurveyModule {
     constructor(private readonly adminSite: DefaultAdminSite) {
         
-        adminSite.register('Survey', Survey)
+        adminSite.register('Survey', SurveyAdmin)
       }
 }
