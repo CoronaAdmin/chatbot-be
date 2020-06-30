@@ -15,6 +15,9 @@ import { QuestionsModule } from './questions/questions.module';
 import { AnswersController } from './answers/answers.controller';
 import { AnswersService } from './answers/answers.service';
 import { AnswersModule } from './answers/answers.module';
+import { ChatbotController } from './chatbot/chatbot.controller';
+import { ChatbotService } from './chatbot/chatbot.service';
+import { ChatbotModule } from './chatbot/chatbot.module';
 
 @Module({
   
@@ -22,12 +25,14 @@ import { AnswersModule } from './answers/answers.module';
     AccountModule,
     SurveyModule,
     QuestionsModule,
-    AnswersModule],
+    AnswersModule,
+    ChatbotModule],
   controllers: [
     AccountController,
     SurveyController,
     QuestionsController,
     AnswersController,
+    ChatbotController,
   ],
   providers: [],
   
