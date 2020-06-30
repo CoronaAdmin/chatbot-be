@@ -1,8 +1,9 @@
-import { Controller, Get, Post, UsePipes, Body, Param, ParseIntPipe, Delete, Req } from '@nestjs/common';
+import { Controller, Get, Post, UsePipes, Body, Param, ParseIntPipe, Delete, Req, UseGuards } from '@nestjs/common';
 import { QuestionsService } from './questions.service';
 import { ValidationPipe } from 'src/common/validation.pipe';
 import { CreateQuestionsDto } from './dto/questions.dto';
-import { ApiUseTags } from '@nestjs/swagger';
+import { ApiUseTags, ApiBearerAuth } from '@nestjs/swagger';
+import { AuthGuard } from 'src/shared/auth-guard';
 
 @ApiUseTags("Questions Management")
 @Controller('/api/v1/questions')
@@ -14,6 +15,8 @@ export class QuestionsController {
         return 'Welcome to COVID-19 questions';
     }
 
+    @ApiBearerAuth()
+    @UseGuards(new AuthGuard())
     @Get('fetch_questions/all')
     getAllQuestions(
         @Req() req,
@@ -21,6 +24,8 @@ export class QuestionsController {
         return this.questionsService.getAllQuestions(req.user);
     }
 
+    @ApiBearerAuth()
+    @UseGuards(new AuthGuard())
     @Get('/fetch_questions/:surveyId')
     getSurveyQuestions(
         @Req() req,
@@ -29,6 +34,8 @@ export class QuestionsController {
         return this.questionsService.getSurveyQuestions(req.user,surveyId);
     }
 
+    @ApiBearerAuth()
+    @UseGuards(new AuthGuard())
     @Post("submit_question/:surveyId")
     @UsePipes(new ValidationPipe())
     async create(
@@ -38,6 +45,8 @@ export class QuestionsController {
         return this.questionsService.createQuestions(req.user,createQuestionsDto,surveyId)
     }
 
+    @ApiBearerAuth()
+    @UseGuards(new AuthGuard())
     @Delete("delete_question/:ques_id")
     async deleteQuestion(
         @Req() req,
