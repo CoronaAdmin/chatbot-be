@@ -7,6 +7,7 @@ import { AccountRepository } from './account.repository';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import * as config from 'config';
+import { DefaultAdminModule, DefaultAdminSite } from 'nestjs-admin';
 const jwtConfig = config.get('jwt');
 @Module({
   imports:[
@@ -16,9 +17,14 @@ const jwtConfig = config.get('jwt');
       secret: process.env.JWT || jwtConfig.secret,
       signOptions: { expiresIn: '24h' },
     }),
+    DefaultAdminModule
   ],
   controllers: [AccountController],
   providers: [AccountService],
   exports: [AccountService]
 })
-export class AccountModule {}
+export class AccountModule {
+  constructor(private readonly adminSite: DefaultAdminSite) {
+    adminSite.register('Account', Account)
+  }
+}

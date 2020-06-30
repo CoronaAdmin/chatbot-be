@@ -18,7 +18,7 @@ import { AnswersModule } from './answers/answers.module';
 import { ChatbotController } from './chatbot/chatbot.controller';
 import { ChatbotService } from './chatbot/chatbot.service';
 import { ChatbotModule } from './chatbot/chatbot.module';
-
+import {DefaultAdminModule} from 'nestjs-admin'
 @Module({
   
   imports: [TypeOrmModule.forRoot(DbConfig),
@@ -26,7 +26,8 @@ import { ChatbotModule } from './chatbot/chatbot.module';
     SurveyModule,
     QuestionsModule,
     AnswersModule,
-    ChatbotModule],
+    ChatbotModule,
+  DefaultAdminModule],
   controllers: [
     AccountController,
     SurveyController,
