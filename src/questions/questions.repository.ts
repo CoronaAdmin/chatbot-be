@@ -38,11 +38,11 @@ export class QuestionsRepository extends Repository<Questions> {
         .createQueryBuilder("question")
         .where("question.survey_id = :id", { id: surveyId })
         .getMany()
-
         if(questions){
           return{
             message:"Questions for survey id "+surveyId+" are fetched successfully!!",
-            questions
+            questions,
+            survey
           }
         }
         else{

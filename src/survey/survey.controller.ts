@@ -1,4 +1,4 @@
-import { Controller,Get,Post,Body, UsePipes, Delete, Param, ParseIntPipe } from '@nestjs/common';
+import { Controller,Get,Post,Body, UsePipes, Delete, Param, ParseIntPipe, Req } from '@nestjs/common';
 import { CreateSurveyDto } from './dto/create-survey.dto';
 import { SurveyService } from './survey.service';
 import { ValidationPipe } from '../common/validation.pipe';
@@ -17,7 +17,7 @@ export class SurveyController {
 
     //get all surveys list
     @Get('fetch_surveys/all')
-    getAllSurveys():Promise<any>{
+    getAllSurveys(@Req() req):Promise<any>{
         return this.surveyService.getAllSurveys();
     }
 
