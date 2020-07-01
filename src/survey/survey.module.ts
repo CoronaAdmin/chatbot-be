@@ -4,13 +4,21 @@ import { SurveyService } from './survey.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Survey } from './entity/survey.entity';
 import { SurveyRepository } from './survey.repository';
+import { DefaultAdminModule, DefaultAdminSite } from 'nestjs-admin';
+import { SurveyAdmin } from './survey.admin';
 
 @Module({
     imports:[
         TypeOrmModule.forFeature([Survey,SurveyRepository]),
+        DefaultAdminModule
     ],
     controllers: [SurveyController],
     providers: [SurveyService,SurveyRepository],
     exports:[SurveyService,SurveyRepository]
 })
-export class SurveyModule {}
+export class SurveyModule {
+    constructor(private readonly adminSite: DefaultAdminSite) {
+        
+        adminSite.register('Survey', SurveyAdmin)
+      }
+}

@@ -13,9 +13,15 @@ export class AnswersService {
       ) {}
 
     async submitUserResponse(user:any,data:CreateAnswersDto,userid:number) {
+      if(user.type!=='ashaworker'){
+        throw new UnauthorizedException({detail:'User Not Authorized'})
+      }
         return this.answersRepository.submitResponse(data,userid,this.accountRepository)
     }
     async getUserResponse(user:any,userid:number){
+      if(user.type!=='ashaworker'){
+        throw new UnauthorizedException({detail:'User Not Authorized'})
+      }
       return this.answersRepository.getUserResponse(userid,this.accountRepository)
     }
 }

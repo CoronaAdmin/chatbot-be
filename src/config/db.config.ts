@@ -2,6 +2,7 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import * as config from 'config';
 import * as fs from 'fs';
 const dbConfig = config.get('db');
+const AdminUser = require('nestjs-admin').AdminUserEntity
 
 export const DbConfig: TypeOrmModuleOptions = {
   type: 'postgres',
@@ -11,7 +12,7 @@ export const DbConfig: TypeOrmModuleOptions = {
   username: dbConfig.username,
   password: dbConfig.password,
   database: dbConfig.database,
-  entities: [__dirname + '/../**/*.entity.{js,ts}'],
+  entities: [__dirname + '/../**/*.entity.{js,ts}',AdminUser],
   migrations: [__dirname + '/../**/migrations/*{.ts,.js}'],
   synchronize: false,
   migrationsRun: true,

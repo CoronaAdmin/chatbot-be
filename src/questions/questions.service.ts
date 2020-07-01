@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { QuestionsRepository } from './questions.repository';
 import { CreateQuestionsDto } from './dto/questions.dto';
@@ -12,19 +12,31 @@ export class QuestionsService {
         private readonly surveyRepository:SurveyRepository,
       ) {} 
 
-    async createQuestions(data:CreateQuestionsDto,id:number) {
+    async createQuestions(user:any,data:CreateQuestionsDto,id:number) {
+      if(user.type!=='ashaworker'){
+        throw new UnauthorizedException({detail:'User Not Authorized'})
+      }
         return this.questionsRepository.createQuestions(data,id,this.surveyRepository)
       }
 
-    async getAllQuestions():Promise<any>{
+    async getAllQuestions(user:any):Promise<any>{
+      if(user.type!=='ashaworker'){
+        throw new UnauthorizedException({detail:'User Not Authorized'})
+      }
       return this.questionsRepository.getQuestions()
     }
 
-    async getSurveyQuestions(surveyId:number):Promise<any>{
+    async getSurveyQuestions(user:any,surveyId:number):Promise<any>{
+      if(user.type!=='ashaworker'){
+        throw new UnauthorizedException({detail:'User Not Authorized'})
+      }
       return this.questionsRepository.getSurveyQuestions(surveyId,this.surveyRepository)
     }
 
-    async deleteQuestion(ques_id:number):Promise<any>{
+    async deleteQuestion(user:any,ques_id:number):Promise<any>{
+      if(user.type !=='ashaworker'){
+        throw new UnauthorizedException({detail:'User Not Authorized'})
+      }
       return this.questionsRepository.deleteQuestion(ques_id)
     }
 
