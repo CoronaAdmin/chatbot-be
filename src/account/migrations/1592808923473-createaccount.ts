@@ -34,6 +34,11 @@ export class createaccount1592808923473 implements MigrationInterface {
                   default: "'ACTIVE'",
                 },
                 {
+                  name:'users',
+                  type: 'jsonb',
+                  isNullable: true,
+                },
+                {
                   name: 'lastLogin',
                   type: 'timestamp',
                   isNullable: true,

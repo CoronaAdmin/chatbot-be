@@ -21,6 +21,9 @@ import {
     @Column({ length: 128 })
     email: string;
 
+    @Column({type:'jsonb',nullable:true})
+    users:any;
+
     @Column({length:128})
     status: string;
   

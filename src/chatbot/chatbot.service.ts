@@ -7,8 +7,8 @@ const sessionId = uuid.v4();
 
 @Injectable()
 export class ChatbotService {
+
     async runSample(message:string,projectId = 'nest-chat-bot-hxwsgv') {
-    
     try{
       const key = process.env.private_key.toString()
       const sessionClient = new dialogflow.SessionsClient({
