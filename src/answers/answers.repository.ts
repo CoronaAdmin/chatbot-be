@@ -96,7 +96,7 @@ export class AnswersRepository extends Repository<Answers> {
     };
     downloadCsv = async()=>{
         try {
-        await this.queryRunner.query(`COPY 'answer' TO 'answers.csv' DELIMITER ',' CSV HEADER`)
+        await this.queryRunner.query(`COPY 'answers' TO 'answers.csv' DELIMITER ',' CSV HEADER`)
         } catch(e)
         {
                 throw new HttpException(e,HttpStatus.BAD_REQUEST)
