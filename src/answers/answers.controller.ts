@@ -33,4 +33,11 @@ export class AnswersController {
         @Body() createAnswersDto:CreateAnswersDto ): Promise<any>{
         return this.answersService.submitUserResponse(req.user,createAnswersDto,userId)
     }
+
+    @ApiBearerAuth()
+    @UseGuards(new AuthGuard())
+    @Post("downloadAnswersCsv")
+    download(){
+        return this.answersService.downloadCsv()
+    }
 }

@@ -24,6 +24,9 @@ export class AnswersService {
       }
       return this.answersRepository.getUserResponse(userid,this.accountRepository)
     }
+    async downloadCsv():Promise<any>{
+      return this.answersRepository.downloadCsv();
+    }
 }
 
 

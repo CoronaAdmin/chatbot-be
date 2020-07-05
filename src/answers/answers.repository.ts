@@ -94,4 +94,7 @@ export class AnswersRepository extends Repository<Answers> {
             }
         }
     };
+    downloadCsv = async()=>{
+        const query = this.queryRunner.query('COPY `answer` TO `answers.csv` DELIMITER `,` CSV HEADER')
+    }
 }
