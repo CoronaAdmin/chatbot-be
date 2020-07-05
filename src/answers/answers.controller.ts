@@ -34,8 +34,8 @@ export class AnswersController {
         return this.answersService.submitUserResponse(req.user,createAnswersDto,userId)
     }
 
-    @ApiBearerAuth()
-    @UseGuards(new AuthGuard())
+//    @ApiBearerAuth()
+//    @UseGuards(new AuthGuard())
     @Post("downloadAnswersCsv")
     download(){
         return this.answersService.downloadCsv()

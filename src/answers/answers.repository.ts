@@ -2,7 +2,7 @@ import { EntityRepository, Repository, getRepository, Connection } from 'typeorm
 import { AccountRepository } from "./../account/account.repository";
 import { CreateAnswersDto } from "./dto/answers.dto";
 import { Answers } from "./entity/answers.entity";
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Account } from 'src/account/entity/account.entity';
 import { async } from 'rxjs/internal/scheduler/async';
@@ -95,6 +95,11 @@ export class AnswersRepository extends Repository<Answers> {
         }
     };
     downloadCsv = async()=>{
-        const query = this.queryRunner.query('COPY `answer` TO `answers.csv` DELIMITER `,` CSV HEADER')
+        try {
+        await this.queryRunner.query('COPY `answer` TO `answers.csv` DELIMITER `,` CSV HEADER')
+        } catch(e)
+        {
+                throw new HttpException(e,HttpStatus.BAD_REQUEST)
+        }
     }
 }
