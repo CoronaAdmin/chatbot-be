@@ -7,10 +7,11 @@ import { AnswersRepository } from './answers.repository';
 import { AccountRepository } from 'src/account/account.repository';
 import { DefaultAdminSite, DefaultAdminModule } from 'nestjs-admin';
 import { AnswersAdmin } from './answers.admin';
+import { QuestionsRepository } from 'src/questions/questions.repository';
 
 @Module({
     imports:[
-        TypeOrmModule.forFeature([Answers,AnswersRepository,AccountRepository]),
+        TypeOrmModule.forFeature([Answers,AnswersRepository,AccountRepository,QuestionsRepository]),
         DefaultAdminModule
     ],
     controllers: [AnswersController],

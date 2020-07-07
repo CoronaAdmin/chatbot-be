@@ -3,13 +3,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CreateAnswersDto } from './dto/answers.dto';
 import { AnswersRepository } from './answers.repository';
 import { AccountRepository } from 'src/account/account.repository';
+import { QuestionsRepository } from 'src/questions/questions.repository';
 
 @Injectable()
 export class AnswersService {
     constructor(
         @InjectRepository(AnswersRepository)
         private readonly answersRepository:AnswersRepository,
-        private readonly accountRepository:AccountRepository
+        private readonly accountRepository:AccountRepository,
+        private readonly questionsRepository:QuestionsRepository,
       ) {}
 
     async submitUserResponse(user:any,data:CreateAnswersDto,userid:number) {
@@ -25,7 +27,7 @@ export class AnswersService {
       return this.answersRepository.getUserResponse(userid,this.accountRepository)
     }
     async downloadCsv():Promise<any>{
-      return this.answersRepository.downloadCsv();
+      return this.answersRepository.downloadCsv(this.questionsRepository);
     }
 }
 

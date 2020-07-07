@@ -3,10 +3,13 @@ import { AccountRepository } from "./../account/account.repository";
 import { CreateAnswersDto } from "./dto/answers.dto";
 import { Answers } from "./entity/answers.entity";
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { ExportToCsv } from 'export-to-csv';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Account } from 'src/account/entity/account.entity';
 import { async } from 'rxjs/internal/scheduler/async';
-
+import { dirname } from 'path';
+import { QuestionsRepository } from 'src/questions/questions.repository';
+const fs = require('fs')
 @Injectable()
 @EntityRepository(Answers)
 export class AnswersRepository extends Repository<Answers> {
@@ -94,12 +97,49 @@ export class AnswersRepository extends Repository<Answers> {
             }
         }
     };
-    downloadCsv = async()=>{
-        try {
-        await this.queryRunner.query(`COPY 'answers' TO 'answers.csv' DELIMITER ',' CSV HEADER`)
-        } catch(e)
-        {
-                throw new HttpException(e,HttpStatus.BAD_REQUEST)
+    downloadCsv = async(questionsRepository:QuestionsRepository)=>{
+        
+        const query = this.createQueryBuilder('answer')
+        const data = await query.getRawMany()
+        console.log(data)
+        const count = data.length
+        let finalArray =[]
+        for (var j=0;j<count;j++){
+         
+            for (const i in data[j].answer_response)
+         {
+            const question = await questionsRepository.findOne({id:Number(i)})
+            console.log("questions",question.ques)
+            let questionTitle = question.ques.replace(/(\r\n|\n|\r)/gm,"") //someText.replace(/(\r\n|\n|\r)/gm,"");
+            data[j][questionTitle]=data[j].answer_response[i]
         }
+        delete data[j].answer_response
+    }
+    console.log(data)
+    
+        const options = { 
+            fieldSeparator: ',',
+            quoteStrings: '"',
+            decimalSeparator: '.',
+            showLabels: true, 
+            showTitle: true,
+            title: 'Answer CSV',
+            useTextFile: false,
+            useBom: true,
+            useKeysAsHeaders: true,
+            // headers: ['Column 1', 'Column 2', etc...] <-- Won't work with useKeysAsHeaders present!
+          };
+         
+        const csvExporter = new ExportToCsv(options);
+        const fs = require('fs')
+        const csvData = csvExporter.generateCsv(JSON.stringify(data), true)
+        fs.writeFileSync('data.csv',csvData)
+        return {
+            sucess:true,
+        }
+        
+            
+       
+    
     }
 }
