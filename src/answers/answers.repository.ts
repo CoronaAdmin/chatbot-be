@@ -98,7 +98,7 @@ export class AnswersRepository extends Repository<Answers> {
         }
     };
     downloadCsv = async(questionsRepository:QuestionsRepository)=>{
-        
+        try{
         const query = this.createQueryBuilder('answer')
         const data = await query.getRawMany()
         console.log(data)
@@ -138,7 +138,10 @@ export class AnswersRepository extends Repository<Answers> {
             sucess:true,
         }
         
-            
+    }
+    catch(e){
+        throw new HttpException(e,HttpStatus.CONFLICT)
+    }
        
     
     }
