@@ -1,4 +1,4 @@
-import { Controller, Get, Post, UsePipes, Param, ParseIntPipe, Body, Req, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, UsePipes, Param, ParseIntPipe, Body, Req, UseGuards, Res } from '@nestjs/common';
 import { AnswersService } from './answers.service';
 import { CreateAnswersDto } from './dto/answers.dto';
 import { ApiUseTags, ApiBearerAuth } from '@nestjs/swagger';
@@ -37,7 +37,7 @@ export class AnswersController {
 //    @ApiBearerAuth()
 //    @UseGuards(new AuthGuard())
     @Post("downloadAnswersCsv")
-    download(){
-        return this.answersService.downloadCsv()
+    download(@Res() res,){
+        return this.answersService.downloadCsv(res)
     }
 }

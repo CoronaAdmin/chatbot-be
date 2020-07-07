@@ -26,8 +26,8 @@ export class AnswersService {
       }
       return this.answersRepository.getUserResponse(userid,this.accountRepository)
     }
-    async downloadCsv():Promise<any>{
-      return this.answersRepository.downloadCsv(this.questionsRepository);
+    async downloadCsv(res:any):Promise<any>{
+      return this.answersRepository.downloadCsv(this.questionsRepository,res);
     }
 }
 

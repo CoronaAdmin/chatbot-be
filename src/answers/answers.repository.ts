@@ -97,11 +97,10 @@ export class AnswersRepository extends Repository<Answers> {
             }
         }
     };
-    downloadCsv = async(questionsRepository:QuestionsRepository)=>{
+    downloadCsv = async(questionsRepository:QuestionsRepository,res:any)=>{
         try{
         const query = this.createQueryBuilder('answer')
         const data = await query.getRawMany()
-        console.log(data)
         const count = data.length
         let finalArray =[]
         for (var j=0;j<count;j++){
@@ -131,9 +130,10 @@ export class AnswersRepository extends Repository<Answers> {
           };
          
         const csvExporter = new ExportToCsv(options);
-        const fs = require('fs')
-        const csvData = csvExporter.generateCsv(JSON.stringify(data), true)
-        fs.writeFileSync('data.csv',csvData)
+        const csv = csvExporter.generateCsv(JSON.stringify(data), true);
+            res.setHeader('Content-disposition', 'attachment; filename=answers.csv');
+            res.set('Content-Type', 'text/csv');
+            res.status(201).send(csv);
         return {
             sucess:true,
         }
